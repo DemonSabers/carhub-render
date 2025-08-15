@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CarHub – Search</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>CarHub</h1>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/search">Search</a>
+      </nav>
+    </header>
+    <main>
+      <h2>Search</h2>
+      <form id="search-form">
+        <input type="text" id="query" placeholder="Search for videos or parts…" />
+        <button type="submit">Search</button>
+      </form>
+      <section>
+        <h3>Videos</h3>
+        <ul id="video-results"></ul>
+      </section>
+      <section>
+        <h3>Parts</h3>
+        <ul id="parts-results"></ul>
+      </section>
+    </main>
+    <script>
+      const form = document.getElementById('search-form');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const q = document.getElementById('query').value;
+        const res = await fetch('/api/search?q=' + encodeURIComponent(q));
+        const data = await res.json();
+        const vList = document.getElementById('video-results');
+        vList.innerHTML = '';
+        data.videos.forEach((v) => {
+          const li = document.createElement('li');
+          li.textContent = v.title;
+          vList.appendChild(li);
+        });
+        const pList = document.getElementById('parts-results');
+        pList.innerHTML = '';
+        data.parts.forEach((p) => {
+          const li = document.createElement('li');
+          li.textContent = p.name;
+          pList.appendChild(li);
+        });
+      });
+    </script>
+  </body>
+</html>
