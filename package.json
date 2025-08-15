@@ -1,0 +1,12 @@
+{
+  "name": "carhub-render",
+  "version": "1.0.0",
+  "description": "Minimal dynamic carhub site",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
