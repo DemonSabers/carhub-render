@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CarHub – For You</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>CarHub</h1>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/search">Search</a>
+      </nav>
+    </header>
+    <main>
+      <h2>For You</h2>
+      <ul id="feed"></ul>
+    </main>
+    <script>
+      async function loadFeed() {
+        try {
+          const res = await fetch('/api/feed');
+          const data = await res.json();
+          const list = document.getElementById('feed');
+          list.innerHTML = '';
+          data.videos.forEach((video) => {
+            const li = document.createElement('li');
+            li.innerHTML = `<strong>${video.title}</strong><p>${video.description}</p>`;
+            list.appendChild(li);
+          });
+        } catch (err) {
+          console.error('Failed to load feed', err);
+        }
+      }
+      loadFeed();
+    </script>
+  </body>
+</html>
